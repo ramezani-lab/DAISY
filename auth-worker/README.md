@@ -8,7 +8,7 @@ Setup steps are in `GUIDE-fa.md` (section «ورود و پنل مدیریت»). 
 
 1. GitHub → Settings → Developer settings → OAuth Apps → New:
    homepage `https://daisy-lab.ir`, callback `https://auth.daisy-lab.ir/callback`.
-2. Cloudflare → Workers & Pages → Create → Import a repository → `mohmmadweb/daisy`, root directory `auth-worker`.
+2. Cloudflare → Workers & Pages → Create → Import a repository → `ramezani-lab/DAISY`, root directory `auth-worker`.
 3. Add the secrets `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to the Worker.
 
 Update: copy `src/index.js` from the upstream repository.

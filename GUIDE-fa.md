@@ -93,7 +93,7 @@ next_type: academia                    # academia | industry | startup | other
 ## ۳. خط فرمان (اختیاری)
 
 ```bash
-git clone https://github.com/mohmmadweb/daisy.git && cd daisy
+git clone https://github.com/ramezani-lab/DAISY.git && cd DAISY
 npm install
 npm run dev                                         # پیش‌نمایش روی http://localhost:4321
 
@@ -140,12 +140,12 @@ GitHub Pages از قبل روشن است و دامنه‌ی `daisy-lab.ir` رو�
 | A | `@` | `185.199.109.153` |
 | A | `@` | `185.199.110.153` |
 | A | `@` | `185.199.111.153` |
-| CNAME | `www` | `mohmmadweb.github.io` |
+| CNAME | `www` | `ramezani-lab.github.io` |
 
 رکورد `auth` را دستی نسازید. در گام ۶ خودکار ساخته می‌شود.
 
 ### گام ۴: روشن کردن HTTPS
-1. ۱۵ دقیقه تا یکی دو ساعت بعد از گام ۳، در گیت‌هاب به ریپوی `mohmmadweb/daisy` → **Settings → Pages** بروید.
+1. ۱۵ دقیقه تا یکی دو ساعت بعد از گام ۳، در گیت‌هاب به ریپوی `ramezani-lab/DAISY` → **Settings → Pages** بروید.
 2. باید کنار `daisy-lab.ir` تیک سبز «DNS check successful» بیاید.
 3. گزینه‌ی **Enforce HTTPS** را تیک بزنید.
 
@@ -164,7 +164,7 @@ GitHub Pages از قبل روشن است و دامنه‌ی `daisy-lab.ir` رو�
 
 ### گام ۶: راه‌اندازی سرویس ورود در Cloudflare
 1. در Cloudflare به **Workers & Pages** بروید، **Create** را بزنید و **Import a repository** را انتخاب کنید.
-2. حساب گیت‌هاب را وصل کنید و ریپوی `mohmmadweb/daisy` را انتخاب کنید.
+2. حساب گیت‌هاب را وصل کنید و ریپوی `ramezani-lab/DAISY` را انتخاب کنید.
 3. تنظیمات را این‌طور بگذارید:
    - **Project name:** `daisy-lab-auth`
    - در قسمت Advanced settings، **Root directory:** `auth-worker`
@@ -194,6 +194,16 @@ GitHub Pages از قبل روشن است و دامنه‌ی `daisy-lab.ir` رو�
 - **مسیر تغییرات:** پنل و سرویس ورود هیچ داده‌ای نگه نمی‌دارند. هر ذخیره مستقیم یک commit در گیت‌هاب است، پس تاریخچه‌ی کامل و امکان برگرداندن هر تغییر همیشه هست.
 - **ورود بدون گیت‌هاب‌اپ:** تا وقتی گام‌های ۵ و ۶ انجام نشده، می‌توانید با گزینه‌ی **Sign In Using Access Token** وارد پنل شوید. برای این کار یک Personal Access Token گیت‌هاب با دسترسی Contents روی ریپوی daisy لازم است.
 - **کمک من:** اگر خواستید، گام‌های ۳ و ۶ را خودم انجام می‌دهم. کافی است در Cloudflare یک API Token با دسترسی «Edit Cloudflare Workers» و «Edit zone DNS» برای دامنه‌ی daisy-lab.ir بسازید و روی سرور در فایلی بگذارید که بگویم.
+
+---
+
+## ریپوی سایت: `ramezani-lab/DAISY`
+
+کد سایت از ریپوی شخصی `mohmmadweb/daisy` به ریپوی سازمان آزمایشگاه یعنی **`ramezani-lab/DAISY`** منتقل شده است.
+
+- **عمومی بودن ریپو:** در پلن رایگان گیت‌هاب، Pages فقط برای ریپوهای **عمومی (Public)** سازمان کار می‌کند. پس ریپو باید Public باشد. هیچ رمز یا کلیدی داخل ریپو نیست؛ کلیدها فقط در `.env` روی سرور و در Secrets کلودفلر هستند.
+- **پنل مدیریت:** اگر سازمان «OAuth App access restrictions» را روشن کرده باشد، مالک سازمان باید برنامه‌ی **DAISY Lab CMS** را تأیید کند. این تنظیم در Organization → Settings → Third-party access است.
+- **اعضا:** اعضای آزمایشگاه را به خود سازمان یا به این ریپو اضافه کنید تا بتوانند وارد پنل شوند.
 
 ---
 

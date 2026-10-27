@@ -1,10 +1,10 @@
 # Content manager at https://daisy-lab.ir/admin/ (Sveltia CMS).
 # Sign-in goes through the lab's own authenticator at auth.daisy-lab.ir.
-# Anyone with write access to github.com/mohmmadweb/daisy can sign in.
+# Anyone with write access to github.com/ramezani-lab/DAISY can sign in.
 
 backend:
   name: github
-  repo: mohmmadweb/daisy
+  repo: ramezani-lab/DAISY
   branch: main
   base_url: https://auth.daisy-lab.ir
   auth_scope: public_repo  # the repo is public, so members never grant access to their private repos
