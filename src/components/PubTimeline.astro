@@ -77,9 +77,9 @@ const labelEvery = years.length > 14 ? 2 : 1;
 <style>
   .tl { margin: 0; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-  .chips button { font: inherit; font-size: var(--fs-xs); font-weight: 550; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink-2); cursor: pointer; }
-  .chips button:hover { border-color: var(--ink); color: var(--ink); }
-  .chips button[aria-pressed='true'] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .chips button { font: inherit; font-size: var(--fs-xs); font-weight: 550; padding: 6px 12px; border: 0; background: var(--tint); color: var(--ink-2); cursor: pointer; transition: background-color 0.15s, color 0.15s; }
+  .chips button:hover { background: var(--tint-2); color: var(--ink); }
+  .chips button[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
   .plot { position: relative; }
   svg { display: block; width: 100%; height: auto; overflow: visible; }
   .axis { stroke: var(--rule-strong); stroke-width: 1.5; }
@@ -94,7 +94,7 @@ const labelEvery = years.length > 14 ? 2 : 1;
   .dot { opacity: 0; transform: translateY(-14px); transition: opacity 0.5s var(--d), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.3) var(--d); }
   .in .dot { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) { .dot { opacity: 1; transform: none; } }
-  .tip { position: absolute; transform: translate(-50%, calc(-100% - 16px)); width: max-content; max-width: 260px; padding: 9px 12px; border-radius: 8px; background: var(--ink); color: var(--paper); font-size: var(--fs-xs); line-height: 1.4; pointer-events: none; z-index: 2; box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.4); }
+  .tip { position: absolute; transform: translate(-50%, calc(-100% - 16px)); width: max-content; max-width: 260px; padding: 9px 12px; background: var(--ink); color: var(--paper); font-size: var(--fs-xs); line-height: 1.4; pointer-events: none; z-index: 2; box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.4); }
   .tip strong { display: block; font-weight: 600; }
   .tip span { opacity: 0.75; }
   figcaption { margin-top: 6px; font-size: var(--fs-xs); color: var(--muted); }

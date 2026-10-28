@@ -9,6 +9,7 @@ import NewsItem from '../components/NewsItem.astro';
 import EventItem from '../components/EventItem.astro';
 import Avatar from '../components/Avatar.astro';
 import { site, research, publications, people, load, events, byDateDesc, PROJECT_KINDS } from '../lib/data';
+import credits from '../data/photo-credits.json';
 
 const areas = await research();
 const pubs = await publications();
@@ -19,6 +20,7 @@ const { upcoming } = await events();
 const { current, alumni } = await people();
 const positions = (await load('positions')).filter((p) => p.data.status === 'open');
 const projects = (await load('projects')).filter((p) => p.data.status === 'active').sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+const campus = credits.find((c) => c.file.includes('campus-alborz'))!;
 const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).length;
 ---
 <Base>
@@ -26,14 +28,13 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
     <Diffusion />
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="lab-name"><strong>{site.name}</strong> {site.full_name}</p>
-        <h1>{site.tagline}</h1>
+        <h1>{site.name}</h1>
+        <p class="statement">The {site.full_name} in the <a href={site.department_url}>{site.department}</a> at <a href={site.university_url}>{site.university}</a>.</p>
         <p class="intro">{site.intro}</p>
         <div class="cta">
           <a class="btn primary" href="/publications/">Read our publications</a>
           <a class="btn" href="/join/">Work with us</a>
         </div>
-        <p class="where"><a href={site.department_url}>{site.department}</a><br /><a href={site.university_url}>{site.university}</a>, Tehran</p>
       </div>
       <div class="hero-art" data-tilt><Daisy /></div>
     </div>
@@ -45,7 +46,7 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
         <h2>Research directions</h2>
         <a class="more" href="/research/">All research</a>
       </div>
-      <ul class="areas">
+      <ul class="areas" data-stagger>
         {areas.map((a, i) => (
           <li data-area-i={i}>
             <a href={`/research/${a.id}/`}>
@@ -59,7 +60,7 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
     </div>
   </section>
 
-  <section class="section demo" data-reveal>
+  <section class="section tone demo" data-reveal>
     <div class="wrap demo-grid">
       <div class="demo-text">
         <h2>Ask the lab's data a question</h2>
@@ -86,29 +87,33 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section tone" data-reveal>
     <div class="wrap">
       <div class="section-head">
         <div><h2>Our work over time</h2><p>{pubs.length} papers across {areas.length} research directions.</p></div>
         <a class="more" href="/publications/">All publications</a>
       </div>
       <div class="timeline"><PubTimeline /></div>
-      <h3 class="sub">Selected</h3>
+      <h3 class="sub">Selected papers</h3>
       <div class="pubs">{featured.map((p) => <PubItem pub={p} />)}</div>
     </div>
   </section>
 
   {projects.length > 0 && (
     <section class="section" data-reveal>
-      <div class="wrap">
-        <div class="section-head"><h2>Software and data</h2><a class="more" href="/software/">Everything we release</a></div>
-        <ul class="releases">
+      <div class="wrap software">
+        <div class="software-text">
+          <h2>Software and data</h2>
+          <p>Code, datasets and benchmarks from our papers, released so others can check our results and build on them.</p>
+          <a class="more" href="/software/">Everything we release</a>
+        </div>
+        <ul class="releases" data-stagger>
           {projects.map((p) => (
             <li>
               <a href={`/software/${p.id}/`}>
-                <span class="kind">{PROJECT_KINDS[p.data.kind]}</span>
                 <h3>{p.data.title}{p.data.sample && <span class="sample-note">Sample</span>}</h3>
                 <p>{p.data.summary}</p>
+                <span class="kind">{PROJECT_KINDS[p.data.kind]}</span>
               </a>
             </li>
           ))}
@@ -117,13 +122,13 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
     </section>
   )}
 
-  <section class="section" data-reveal>
+  <section class="section people" data-reveal>
     <div class="wrap">
       <div class="section-head">
         <div><h2>The lab</h2><p>{current.length} members{alumni.length > 0 && `, ${alumni.length} alumni`}.</p></div>
         <a class="more" href="/people/">Everyone in the lab</a>
       </div>
-      <ul class="faces">
+      <ul class="faces" data-stagger>
         {current.map((p) => (
           <li>
             <a href={`/people/${p.id}/`}>
@@ -136,6 +141,11 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
       </ul>
     </div>
   </section>
+
+  <figure class="campus photo">
+    <div class="frame"><img src={campus.file} alt={campus.caption} width="2000" height="1500" loading="lazy" decoding="async" /></div>
+    <figcaption class="wrap">{campus.caption}. Room 821 of the Computer Engineering building is where we work.</figcaption>
+  </figure>
 
   <section class="join-band">
     <div class="wrap join-grid">
@@ -153,7 +163,12 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
 
 <script>
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Sections rise into place the first time they scroll into view.
+  // The parts of each section (heading, then text, then figure) rise into
+  // place one after another the first time the section scrolls into view.
+  document.querySelectorAll<HTMLElement>('[data-reveal] .wrap > *, [data-stagger] > *').forEach((el) => {
+    const i = [...el.parentElement!.children].indexOf(el);
+    el.style.setProperty('--i', String(Math.min(i, 8)));
+  });
   const io = new IntersectionObserver((entries) => entries.forEach((e) => {
     if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); }
   }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -164,12 +179,6 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
     document.querySelectorAll('[data-reveal]:not(.shown)').forEach((s) => { if (s.getBoundingClientRect().top < innerHeight) s.classList.add('shown'); });
   }); }, { passive: true });
   document.documentElement.classList.add('js');
-
-  // A soft light follows the pointer across the research-direction cards.
-  document.querySelectorAll<HTMLElement>('.areas a').forEach((a) => a.addEventListener('pointermove', (e) => {
-    const r = a.getBoundingClientRect();
-    a.style.setProperty('--mx', `${e.clientX - r.left}px`); a.style.setProperty('--my', `${e.clientY - r.top}px`);
-  }));
 
   // The flower leans gently towards the pointer.
   const tilt = document.querySelector<HTMLElement>('[data-tilt]');
@@ -189,81 +198,96 @@ const count = (id: string) => pubs.filter((p) => p.data.areas.includes(id)).leng
 </script>
 
 <style>
-  .hero { position: relative; border-bottom: 1px solid var(--rule); overflow: hidden; }
-  .hero-grid { position: relative; z-index: 1; }
-  .hero-art { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); will-change: transform; }
+  .hero { position: relative; overflow: hidden; }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(64px, 8vw, 112px); }
+  .hero-art { transition: transform 0.6s var(--ease-out); will-change: transform; max-width: 620px; margin-right: -24px; justify-self: center; width: 100%; }
   .hero-text { position: relative; }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(24px, 4vw, 64px); align-items: center; padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(40px, 6vw, 72px); }
-  .lab-name { font-size: var(--fs-sm); color: var(--ink-2); margin-bottom: 20px; }
-  .lab-name strong { color: var(--ink); margin-right: 4px; }
-  h1 { font-family: var(--serif); font-size: var(--fs-3xl); font-weight: 600; line-height: 1.06; letter-spacing: -0.025em; max-width: 14ch; }
-  .intro { margin-top: 22px; font-size: var(--fs-md); color: var(--ink-2); max-width: 46ch; line-height: 1.6; }
-  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .where { margin-top: 32px; font-size: var(--fs-sm); color: var(--muted); line-height: 1.55; }
-  .where a { color: var(--ink-2); text-decoration: none; }
-  .where a:hover { text-decoration: underline; }
-  .hero-art { max-width: 640px; margin-right: -24px; justify-self: center; width: 100%; }
-  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-art { max-width: 520px; } }
-
-  .areas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
-  .areas li { border-bottom: 1px solid var(--rule); }
-  .areas li:not(:nth-child(3n)) { border-right: 1px solid var(--rule); }
-  .areas a { display: flex; flex-direction: column; height: 100%; padding: 22px 24px 22px 0; color: var(--ink); text-decoration: none; }
-  .areas li:not(:nth-child(3n + 1)) a { padding-left: 24px; }
-  .areas h3 { font-size: 1.1rem; }
-  .areas p { margin-top: 8px; font-size: var(--fs-sm); color: var(--ink-2); flex: 1; }
-  .count { margin-top: 14px; font-size: var(--fs-xs); color: var(--muted); font-weight: 550; }
-  .areas li.on h3, .areas a:hover h3 { text-decoration: underline; text-decoration-color: var(--daisy); text-decoration-thickness: 3px; text-underline-offset: 4px; }
-  @media (max-width: 860px) {
-    .areas { grid-template-columns: 1fr; }
-    .areas li { border-right: 0 !important; }
-    .areas a { padding: 18px 0 !important; }
+  h1 { font-size: clamp(3.5rem, 7.4vw, 7rem); font-weight: 300; line-height: 0.9; letter-spacing: -0.045em; margin-left: -0.04em; white-space: nowrap; }
+  .statement { margin-top: clamp(24px, 3vw, 36px); font-size: clamp(1.3rem, 1rem + 0.9vw, 1.7rem); line-height: 1.3; letter-spacing: -0.01em; max-width: 24ch; color: var(--ink); }
+  .statement a { color: inherit; text-decoration-color: var(--daisy); text-decoration-thickness: 2px; }
+  .statement a:hover { text-decoration-thickness: 3px; }
+  .intro { margin-top: 20px; font-size: var(--fs-md); color: var(--ink-2); max-width: 46ch; line-height: 1.6; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  @media (max-width: 900px) {
+    .hero { display: flex; flex-direction: column; }
+    .hero-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero-art { max-width: 520px; margin-right: 0; }
+    h1 { font-size: clamp(3.5rem, 18vw, 8rem); }
   }
 
-  :global(html.js) [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  :global(html.js) [data-reveal].shown { opacity: 1; transform: none; }
+  /* Research directions: one row per direction, title, summary, papers. */
+  .areas { list-style: none; margin: 0 calc(-1 * min(20px, var(--gutter))); padding: 0; }
+  .areas a { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) minmax(0, 1.6fr); gap: 8px 40px; align-items: baseline; padding: 26px 20px; color: var(--ink); text-decoration: none; transition: background-color 0.2s; }
+  .areas h3 { font-size: clamp(1.25rem, 1rem + 0.7vw, 1.6rem); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
+  .areas p { font-size: var(--fs-sm); color: var(--ink-2); max-width: 56ch; }
+  .count { font-size: var(--fs-sm); color: var(--ink-2); text-align: right; white-space: nowrap; }
+  .areas li.on a, .areas a:hover { background: var(--surface); }
+  .areas li.on h3, .areas a:hover h3 { text-decoration: underline; text-decoration-color: var(--daisy); text-decoration-thickness: 3px; text-underline-offset: 5px; }
+  @media (max-width: 860px) {
+    .areas a { grid-template-columns: minmax(0, 1fr); padding: 20px min(20px, var(--gutter)); }
+    .count { text-align: left; }
+  }
 
-  .areas a { position: relative; isolation: isolate; }
-  .areas a::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 0.3s;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--daisy) 22%, transparent), transparent 70%); }
-  .areas a:hover::before { opacity: 1; }
+  /* Entrances: each part of a section rises in turn, once. */
+  :global(html.js) [data-reveal] .wrap > *, :global(html.js) [data-reveal] [data-stagger] > * { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease-out) calc(var(--i, 0) * 80ms), transform 0.8s var(--ease-out) calc(var(--i, 0) * 80ms); }
+  :global(html.js) [data-reveal].shown .wrap > *, :global(html.js) [data-reveal].shown [data-stagger] > * { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { :global(html.js) [data-reveal] .wrap > *, :global(html.js) [data-reveal] [data-stagger] > * { opacity: 1; transform: none; } }
 
-  .demo { background: var(--surface); }
-  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-  .demo-text h2 { font-family: var(--serif); font-size: var(--fs-2xl); line-height: 1.1; letter-spacing: -0.02em; max-width: 14ch; }
-  .demo-text p { margin-top: 16px; color: var(--ink-2); max-width: 44ch; }
-  .demo-text .more { display: inline-block; margin-top: 20px; }
+  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+  .demo-text h2 { font-size: var(--fs-2xl); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05; max-width: 12ch; }
+  .demo-text p { margin-top: 18px; color: var(--ink-2); max-width: 44ch; }
+  .demo-text .more { display: inline-block; margin-top: 22px; }
   @media (max-width: 900px) { .demo-grid { grid-template-columns: minmax(0, 1fr); } }
 
-  .timeline { margin-bottom: 36px; }
-  .sub { font-size: var(--fs-md); margin-bottom: 18px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .timeline { margin-bottom: clamp(40px, 5vw, 64px); }
+  .sub { font-size: var(--fs-lg); font-weight: 400; letter-spacing: -0.01em; margin-bottom: 8px; }
 
-  .split { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
+  .split { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); }
   .split > div:only-child { grid-column: 1 / -1; }
   @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
 
-  .releases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-  .releases a { display: block; height: 100%; padding: 22px; border: 1px solid var(--rule); border-radius: var(--r-md); background: var(--surface); color: var(--ink); text-decoration: none; }
-  .releases a:hover { border-color: var(--ink); }
-  .releases .kind { font-size: var(--fs-xs); color: var(--muted); font-weight: 600; }
-  .releases h3 { font-size: 1.2rem; margin-top: 4px; }
-  .releases h3 .sample-note { margin-left: 8px; }
-  .releases p { margin-top: 8px; font-size: var(--fs-sm); color: var(--ink-2); }
+  /* Software: the case for releasing on the left, the releases stacked on the right. */
+  .software { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .software-text p { margin-top: 16px; color: var(--ink-2); max-width: 40ch; }
+  .software-text .more { display: inline-block; margin-top: 20px; }
+  .releases { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .releases a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 24px; padding: 24px 26px; background: var(--surface); color: var(--ink); text-decoration: none; transition: background-color 0.2s; }
+  .releases a:hover { background: var(--surface-2); }
+  .releases h3 { font-size: var(--fs-lg); font-weight: 400; letter-spacing: -0.01em; grid-column: 1; }
+  .releases h3 .sample-note { margin-left: 10px; }
+  .releases p { grid-column: 1; font-size: var(--fs-sm); color: var(--ink-2); }
+  .releases .kind { grid-column: 2; grid-row: 1; font-size: var(--fs-sm); color: var(--ink-2); }
+  @media (max-width: 900px) { .software { grid-template-columns: minmax(0, 1fr); } }
 
-  .faces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 28px 20px; }
+  .faces { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 32px 20px; }
   .faces a { display: flex; flex-direction: column; gap: 3px; color: var(--ink); text-decoration: none; }
-  .faces a :global(.avatar) { width: 100%; height: auto; aspect-ratio: 1; margin-bottom: 10px; }
-  .faces strong { font-size: var(--fs-sm); font-weight: 600; }
-  .faces span { font-size: var(--fs-xs); color: var(--muted); }
+  .faces a :global(.avatar) { width: 100%; height: auto; aspect-ratio: 1; margin-bottom: 12px; transition: filter 0.3s; }
+  .faces a:hover :global(.avatar) { filter: saturate(1.15) contrast(1.05); }
+  .faces strong { font-size: var(--fs-base); font-weight: 600; }
+  .faces span { font-size: var(--fs-sm); color: var(--ink-2); }
   .faces a:hover strong { text-decoration: underline; text-decoration-color: var(--daisy); text-decoration-thickness: 2px; }
 
-  .join-band { background: var(--daisy); color: #1b1e22; }
-  .join-grid { display: flex; justify-content: space-between; align-items: center; gap: 24px 48px; flex-wrap: wrap; padding-top: 48px; padding-bottom: 48px; }
-  .join-band h2 { font-size: var(--fs-xl); max-width: 26ch; }
-  .join-band p { margin-top: 8px; max-width: 60ch; }
+  /* The campus, full width, drifting slowly as the page scrolls past it. */
+  .campus { padding-bottom: clamp(32px, 4vw, 48px); }
+  .campus .frame { overflow: hidden; height: clamp(320px, 66vh, 760px); }
+  .campus img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .campus figcaption { margin-top: 12px; font-size: var(--fs-sm); color: var(--ink-2); }
+  @keyframes drift { from { transform: scale(1.14) translateY(-4%); } to { transform: scale(1.02) translateY(3%); } }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .campus img { animation-name: drift; animation-timing-function: linear; animation-fill-mode: both; }
+      /* Kept as its own rule so the minifier cannot fold it into the shorthand. */
+      .campus .frame > img { animation-timeline: view(); }
+    }
+  }
+
+  .join-band { background: var(--daisy); color: #161719; }
+  .join-grid { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px 64px; flex-wrap: wrap; padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); }
+  .join-band h2 { font-size: var(--fs-2xl); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05; max-width: 18ch; }
+  .join-band p { margin-top: 16px; max-width: 56ch; font-size: var(--fs-md); }
   .join-band .cta { margin-top: 0; }
-  .join-band .btn { border-color: #1b1e22; color: #1b1e22; }
-  .join-band .btn.primary { background: #1b1e22; color: var(--daisy); }
-  .join-band .btn:hover { background: #1b1e22; color: var(--daisy); }
-  .join-band .btn.primary:hover { background: transparent; color: #1b1e22; }
+  .join-band .btn { background: transparent; color: #161719; box-shadow: inset 0 0 0 2px #161719; }
+  .join-band .btn.primary { background: #161719; color: var(--daisy); box-shadow: none; }
+  .join-band .btn:hover { background: #161719; color: var(--daisy); }
+  .join-band .btn.primary:hover { background: #fcfcfb; color: #161719; }
 </style>

@@ -17,8 +17,8 @@ const edit = editUrl('news', item.id);
 <Base title={d.title} description={d.summary} image={d.image} type="article">
   <header class="page-head"><div class="wrap">
     <a class="crumb" href="/news/">News</a>
-    <p class="meta"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>, {NEWS_CATEGORIES[d.category].toLowerCase()}{d.sample && <span class="sample-note">Sample</span>}</p>
     <h1>{d.title}</h1>
+    <p class="meta after"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>, {NEWS_CATEGORIES[d.category].toLowerCase()}{d.sample && <span class="sample-note">Sample</span>}</p>
     <p class="lede">{d.summary}</p>
   </div></header>
   <div class="wrap detail">

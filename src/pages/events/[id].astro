@@ -25,8 +25,8 @@ const ld = {
 <Base title={d.title} description={`${EVENT_TYPES[d.type]}${d.speaker ? ` by ${d.speaker}` : ''}, ${fmtDate(d.date)}.`} jsonld={ld}>
   <header class="page-head"><div class="wrap">
     <a class="crumb" href="/events/">Events</a>
-    <p class="meta">{d.series ?? EVENT_TYPES[d.type]}{d.sample && <span class="sample-note">Sample</span>}</p>
     <h1>{d.title}</h1>
+    <p class="meta after">{d.series ?? EVENT_TYPES[d.type]}{d.sample && <span class="sample-note">Sample</span>}</p>
     {d.speaker && <p class="lede">{d.speaker_url ? <a href={d.speaker_url}>{d.speaker}</a> : d.speaker}{d.affiliation && `, ${d.affiliation}`}</p>}
   </div></header>
   <div class="wrap detail">
@@ -50,7 +50,7 @@ const ld = {
 <style>
   .meta .sample-note { margin-left: 8px; }
   h1 { margin-top: 8px; max-width: 28ch; }
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 0 0 32px; padding: 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 0 0 32px; padding: 20px; background: var(--surface); border-radius: var(--r-md); }
   dt { font-size: var(--fs-xs); color: var(--muted); font-weight: 600; }
   dd { margin: 4px 0 0; }
   .res { display: flex; gap: 10px; margin-top: 28px; }

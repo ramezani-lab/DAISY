@@ -28,9 +28,8 @@ const nextTypes = Object.keys(NEXT).filter((k) => alumni.some((a) => a.data.next
       <section class="lead" id="faculty">
         <Avatar name={p.data.name} photo={p.data.photo} size={220} />
         <div>
-          <p class="meta">Director</p>
           <h2><a href={`/people/${p.id}/`}>{p.data.name}</a></h2>
-          <p class="t">{p.data.title}</p>
+          <p class="t">{p.data.title}, director of the lab</p>
           <p class="bio">{p.body?.split('\n\n')[0]}</p>
           <p class="links">
             {p.data.email && <a href={`mailto:${p.data.email}`}><Icon name="email" />{p.data.email}</a>}
@@ -92,7 +91,7 @@ const nextTypes = Object.keys(NEXT).filter((k) => alumni.some((a) => a.data.next
 </script>
 <style>
   .jump { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 22px; font-size: var(--fs-sm); font-weight: 500; }
-  .lead { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); padding: 48px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .lead { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); padding: 56px 0; align-items: start; }
   .lead h2 { font-size: var(--fs-xl); margin-top: 2px; }
   .lead h2 a { color: var(--ink); text-decoration: none; }
   .lead .t { color: var(--ink-2); margin-top: 4px; }
@@ -100,15 +99,15 @@ const nextTypes = Object.keys(NEXT).filter((k) => alumni.some((a) => a.data.next
   .links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 18px; font-size: var(--fs-sm); }
   .links a { display: inline-flex; align-items: center; gap: 6px; }
   @media (max-width: 640px) { .lead { grid-template-columns: 1fr; } .lead :global(.avatar) { width: 160px; height: 160px; } }
-  .group { padding: 44px 0; border-bottom: 1px solid var(--rule); }
+  .group { padding: 48px 0; }
   .group:last-child { border-bottom: 0; padding-bottom: 80px; }
   .group > h2, .alumni-head h2 { font-size: var(--fs-lg); }
   .group > h2 { margin-bottom: 24px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px 32px; }
   .alumni-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
-  .seg { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: var(--r-sm); overflow: hidden; }
-  .seg button { font: inherit; font-size: var(--fs-xs); font-weight: 550; padding: 6px 12px; border: 0; background: var(--surface); color: var(--ink-2); cursor: pointer; }
-  .seg button + button { border-left: 1px solid var(--rule-strong); }
+  .seg { display: inline-flex; flex-wrap: wrap; gap: 2px; }
+  .seg button { font: inherit; font-size: var(--fs-xs); font-weight: 550; padding: 6px 12px; border: 0; background: var(--tint); color: var(--ink-2); cursor: pointer; }
+  .seg button:hover { background: var(--tint-2); color: var(--ink); }
   .seg button[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
   .table-wrap { overflow-x: auto; }
   .alumni { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); min-width: 640px; }

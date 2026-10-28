@@ -47,7 +47,7 @@ const cited = citations(pub.id);
 </script>
 
 <style>
-  .pub { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .pub { padding: 24px 0; }
   .pub:first-child { padding-top: 0; }
   .pub-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; line-height: 1.32; letter-spacing: -0.005em; max-width: 60ch; }
   .pub-title a { color: var(--ink); text-decoration: none; }
@@ -57,18 +57,18 @@ const cited = citations(pub.id);
   .pub-venue { margin-top: 3px; font-size: var(--fs-sm); color: var(--ink-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
   .pub-venue > em + span { margin-left: -10px; }
   .kind { color: var(--muted); }
-  .cites { font-size: var(--fs-xs); font-weight: 600; color: var(--ink-2); text-decoration: none; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule-strong); font-variant-numeric: tabular-nums; }
-  .cites:hover { border-color: var(--ink); color: var(--ink); }
+  .cites { font-size: var(--fs-xs); font-weight: 600; color: var(--ink-2); text-decoration: none; padding: 2px 8px; background: var(--daisy-soft); color: var(--daisy-ink); font-variant-numeric: tabular-nums; }
+  .cites:hover { background: var(--daisy); color: #161719; }
   .pub-links { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px; }
-  .pub-links > a, .bib summary { font-size: var(--fs-xs); font-weight: 550; padding: 3px 10px; border: 1px solid var(--rule-strong); border-radius: var(--r-sm); color: var(--ink-2); text-decoration: none; cursor: pointer; background: var(--surface); line-height: 1.6; }
-  .pub-links > a:hover, .bib summary:hover { border-color: var(--ink); color: var(--ink); }
+  .pub-links > a, .bib summary { font-size: var(--fs-xs); font-weight: 550; padding: 3px 10px; color: var(--ink-2); text-decoration: none; cursor: pointer; background: var(--tint); line-height: 1.6; transition: background-color 0.15s, color 0.15s; }
+  .pub-links > a:hover, .bib summary:hover { background: var(--ink); color: var(--paper); }
   .bib summary { list-style: none; }
   .bib summary::-webkit-details-marker { display: none; }
-  .bib[open] summary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .bib[open] summary { background: var(--ink); color: var(--paper); }
   .bib { flex-basis: auto; }
   .bib[open] { flex-basis: 100%; }
   .bib-box { position: relative; margin-top: 8px; }
-  .bib-box pre { margin: 0; font-size: 0.78rem; line-height: 1.55; padding: 14px 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow-x: auto; white-space: pre; }
-  .copy { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: var(--fs-xs); padding: 3px 9px; border-radius: var(--r-sm); border: 1px solid var(--rule-strong); background: var(--paper); color: var(--ink-2); cursor: pointer; }
-  .copy:hover { color: var(--ink); border-color: var(--ink); }
+  .bib-box pre { margin: 0; font-size: 0.78rem; line-height: 1.55; padding: 14px 16px; background: var(--tint); overflow-x: auto; white-space: pre; }
+  .copy { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: var(--fs-xs); padding: 3px 9px; border: 0; background: var(--paper); color: var(--ink-2); cursor: pointer; }
+  .copy:hover { background: var(--ink); color: var(--paper); }
 </style>

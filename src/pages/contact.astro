@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../lib/data';
 import { getEntry, render } from 'astro:content';
+import credits from '../data/photo-credits.json';
+const tower = credits.find((c) => c.file.includes('milad-tower'))!;
 const page = (await getEntry('pages', 'contact'))!;
 const { Content } = await render(page);
 const m = site.map;
@@ -22,6 +24,7 @@ const osm = m && `https://www.openstreetmap.org/export/embed.html?bbox=${m.lon -
         <div><dt><Icon name="location" />Address</dt><dd>{site.address.map((l) => <span>{l}</span>)}</dd></div>
       </dl>
       <div class="prose"><Content /></div>
+      <figure class="photo tower"><img src={tower.file} alt={tower.caption} width="2000" height="1500" loading="lazy" decoding="async" /><figcaption>{tower.caption}.</figcaption></figure>
     </div>
     {osm && (
       <figure class="map">
@@ -35,10 +38,12 @@ const osm = m && `https://www.openstreetmap.org/export/embed.html?bbox=${m.lon -
   .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 64px); padding-top: 44px; padding-bottom: 80px; }
   @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
   .info { margin: 0 0 36px; }
-  .info div { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .info div { padding: 14px 0; }
   .info dt { display: flex; align-items: center; gap: 8px; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); }
   .info dd { margin: 4px 0 0; display: flex; flex-direction: column; font-size: var(--fs-md); }
   .map { margin: 0; }
-  iframe { width: 100%; aspect-ratio: 4 / 3.4; border: 1px solid var(--rule); border-radius: var(--r-md); background: var(--surface); }
+  .tower { margin-top: 40px; }
+  .tower img { aspect-ratio: 4 / 3; }
+  iframe { display: block; width: 100%; aspect-ratio: 4 / 3.4; border: 0; background: var(--surface); }
   figcaption { margin-top: 8px; font-size: var(--fs-sm); color: var(--muted); }
 </style>

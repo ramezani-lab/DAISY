@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { site, people, publications, research, load, totalCitations } from '../lib/data';
 import { getEntry, render } from 'astro:content';
+import credits from '../data/photo-credits.json';
+const archway = credits.find((c) => c.file.includes('archway'))!;
 const page = (await getEntry('pages', 'about'))!;
 const { Content } = await render(page);
 const { current, alumni } = await people();
@@ -21,6 +23,7 @@ const facts = [
   <div class="wrap detail">
     <div class="prose"><Content /></div>
     <aside>
+      <figure class="photo arch"><img src={archway.file} alt={archway.caption} width="1500" height="2000" loading="lazy" decoding="async" /><figcaption>{archway.caption}.</figcaption></figure>
       <section><h2>The lab in numbers</h2>
         <dl class="facts">{facts.map(([n, l]) => <div><dt>{l}</dt><dd>{n}</dd></div>)}</dl>
       </section>
@@ -33,12 +36,29 @@ const facts = [
       <section><h2>Contact</h2><ul><li><a href={`mailto:${site.email}`}>{site.email}</a></li><li><a href="/contact/">Address and map</a></li></ul></section>
     </aside>
   </div>
+  <section class="credits" id="photo-credits">
+    <div class="wrap">
+      <h2>Photo credits</h2>
+      <p>Photographs of the campus on this site come from Wikimedia Commons and are used under their licences.</p>
+      <ul>
+        {credits.map((c) => (
+          <li><a href={c.source}>{c.caption}</a>, by {c.author}, {c.license_url ? <a href={c.license_url}>{c.license}</a> : c.license}.</li>
+        ))}
+      </ul>
+    </div>
+  </section>
 </Base>
 <style>
   .facts { margin: 0; }
-  .facts div { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+  .facts div { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 12px; padding: 5px 0; }
   .facts dd { margin: 0; font-size: 1.4rem; font-weight: 600; min-width: 2ch; font-variant-numeric: tabular-nums; }
   .facts dt { color: var(--ink-2); }
   .sponsors { display: flex; flex-direction: column; gap: 14px !important; }
   .sponsors img { max-height: 44px; width: auto; }
+  .arch { margin-bottom: 36px; }
+  .arch img { aspect-ratio: 3 / 4; }
+  .credits { background: var(--surface); padding: 56px 0 64px; font-size: var(--fs-sm); color: var(--ink-2); }
+  .credits h2 { font-size: var(--fs-lg); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 10px; }
+  .credits ul { margin: 14px 0 0; padding-left: 1.2em; }
+  .credits li + li { margin-top: 4px; }
 </style>

@@ -8,8 +8,7 @@
   <canvas></canvas>
 </div>
 <p class="diffusion-note" data-diffusion-note>
-  <span class="pulse" aria-hidden="true"></span>
-  Live: information spreading through a network. <span class="hint">Click anywhere to start a cascade.</span>
+  Behind this text, information spreads through a social network as cascades, the setting of our network-inference work. <span class="hint">Click to start one.</span>
 </p>
 
 <script>
@@ -161,10 +160,9 @@
     mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.22) 0%, rgb(0 0 0 / 0.35) 38%, #000 70%);
     -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.22) 0%, rgb(0 0 0 / 0.35) 38%, #000 70%); }
   canvas { display: block; }
-  .diffusion-note { position: absolute; z-index: 1; left: var(--gutter); bottom: 14px; margin: 0; display: flex; align-items: center; gap: 8px; font-size: var(--fs-xs); color: var(--muted); }
-  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--daisy); box-shadow: 0 0 0 0 color-mix(in srgb, var(--daisy) 70%, transparent); animation: pulse 2s infinite; }
-  @keyframes pulse { 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+  .diffusion-note { position: absolute; z-index: 1; left: var(--gutter); right: var(--gutter); bottom: 20px; margin: 0; max-width: 70ch; font-size: var(--fs-xs); color: var(--ink-2); }
   @media (max-width: 900px) {
+    .diffusion-note { position: relative; left: auto; right: auto; bottom: auto; order: 2; margin: -28px var(--gutter) 32px; }
     .diffusion { mask-image: linear-gradient(180deg, rgb(0 0 0 / 0.25), #000 60%); -webkit-mask-image: linear-gradient(180deg, rgb(0 0 0 / 0.25), #000 60%); }
     .hint { display: none; }
   }

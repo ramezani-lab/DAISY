@@ -19,8 +19,8 @@ const edit = editUrl('projects', project.id);
 <Base title={d.title} description={d.summary}>
   <header class="page-head"><div class="wrap">
     <a class="crumb" href="/software/">Software and data</a>
-    <p class="meta">{PROJECT_KINDS[d.kind]}{d.status === 'archived' && ', archived'}{d.sample && <span class="sample-note">Sample</span>}</p>
     <h1>{d.title}</h1>
+    <p class="meta after">{PROJECT_KINDS[d.kind]}{d.status === 'archived' && ', archived'}{d.sample && <span class="sample-note">Sample</span>}</p>
     <p class="lede">{d.summary}</p>
     <p class="links">
       {d.repo && <a class="btn primary" href={d.repo}><Icon name="github" />Source code</a>}
@@ -53,5 +53,5 @@ const edit = editUrl('projects', project.id);
   .meta .sample-note { margin-left: 8px; }
   h1 { margin-top: 8px; }
   .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-  .cite { margin-top: 10px; font-size: 0.8rem; line-height: 1.6; padding: 18px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow-x: auto; }
+  .cite { margin-top: 10px; font-size: 0.8rem; line-height: 1.6; padding: 18px; background: var(--surface); overflow-x: auto; }
 </style>

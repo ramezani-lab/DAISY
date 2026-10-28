@@ -102,7 +102,7 @@ const usedAreas = areas.filter((a) => pubs.some((p) => p.data.areas.includes(a.i
 
 <style>
   .pub-page { padding-top: 28px; padding-bottom: 80px; }
-  .filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 18px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); }
+  .filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 20px; background: var(--surface); }
   .filters label { display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-xs); color: var(--muted); font-weight: 550; min-width: 0; }
   .filters select, .filters input { font: inherit; font-size: var(--fs-sm); color: var(--ink); background: var(--paper); border: 1px solid var(--rule-strong); border-radius: var(--r-sm); padding: 8px 10px; max-width: 220px; }
   .f-search { flex: 1 1 280px; position: relative; }
@@ -114,8 +114,8 @@ const usedAreas = areas.filter((a) => pubs.some((p) => p.data.areas.includes(a.i
   .actions { display: flex; gap: 18px; }
   .linkish { font: inherit; font-size: var(--fs-sm); font-weight: 550; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
   .linkish:hover { text-decoration: underline; }
-  .flat { margin-top: 16px; border-top: 1px solid var(--rule); padding-top: 20px; }
-  .year { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 24px; padding-top: 28px; border-top: 1px solid var(--rule); margin-top: 12px; }
+  .flat { margin-top: 16px; padding-top: 12px; }
+  .year { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 24px; padding-top: 40px; margin-top: 12px; }
   .y { font-family: var(--serif); font-size: 2rem; font-weight: 500; color: var(--muted); position: sticky; top: 88px; align-self: start; line-height: 1; }
   .year :global(.pub:last-child) { border-bottom: 0; }
   @media (max-width: 700px) {

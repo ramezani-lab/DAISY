@@ -45,11 +45,12 @@ const a = site.admissions;
 </Base>
 <style>
   .banner { margin-top: 26px; padding: 14px 18px; border-radius: var(--r-md); max-width: 70ch; font-size: var(--fs-sm); }
-  .banner.yes { background: var(--daisy-soft); color: var(--ink); border-left: 4px solid var(--daisy); }
-  .banner.no { background: var(--surface); border: 1px solid var(--rule); }
+  .banner.yes { background: var(--daisy); color: #161719; }
+  .banner.no { background: var(--paper); }
   .page { padding-top: 36px; padding-bottom: 80px; }
-  .positions { border-top: 1px solid var(--rule); max-width: 900px; }
-  .pos { border-bottom: 1px solid var(--rule); }
+  .positions { display: grid; gap: 4px; max-width: 920px; }
+  .pos { background: var(--surface); padding: 0 24px; }
+  .pos[open] { background: var(--surface); }
   .pos summary { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 20px 0; cursor: pointer; list-style: none; }
   .pos summary::-webkit-details-marker { display: none; }
   .lvl { font-weight: 600; color: var(--muted); font-size: var(--fs-sm); }
