@@ -39,6 +39,7 @@ These keep the site looking designed rather than generated. Check new pages agai
 - **One accent.** Yellow marks the current page, link underlines, data and the join band; nothing else is coloured.
 - **Headings stay on two lines or fewer.** Long paper titles use the smaller title size.
 - **Pictures are real.** Lab photos, the director's portrait, the campus from Wikimedia Commons (credited in `src/data/photo-credits.json`, shown on /about/#photo-credits). Never stock photos, never AI images.
+- **No oversized decorative type.** The largest text on a page is its title.
 - **Motion has a job.** The diffusion network and the daisy are the signature; sections enter part by part once; the campus photo drifts with the scroll. Everything respects `prefers-reduced-motion`.
 - **Browser surfaces are themed:** selection, caret, scrollbar, focus ring, tabular figures.
 

@@ -121,6 +121,7 @@ const orgLd = {
     <div class="wrap foot">
       <div class="foot-lab">
         <a class="brand" href="/"><Logo size={40} /><span class="brand-text"><strong>{site.name}</strong><span>{site.full_name}</span></span></a>
+        <p class="tagline">{site.tagline}</p>
         <address>
           {site.address.map((l) => <span>{l}</span>)}
         </address>
@@ -159,10 +160,6 @@ const orgLd = {
           </ul>
         </div>
       </nav>
-    </div>
-    <div class="wrap close">
-      <p class="wordmark" aria-hidden="true">{site.name}</p>
-      <p class="tagline">{site.tagline}</p>
     </div>
     <div class="wrap foot-base">
       <p>© {new Date().getFullYear()} {site.name}, <a href={site.department_url}>{site.department}</a>, <a href={site.university_url}>{site.university}</a></p>
@@ -247,11 +244,8 @@ const orgLd = {
   .foot-nav li + li { margin-top: 6px; }
   .foot-nav a { color: var(--ink); text-decoration: none; font-size: var(--fs-sm); }
   .foot-nav a:hover { text-decoration: underline; }
-  /* The footer closes on the lab's name, set at the full width of the page. */
-  .close { padding-top: 24px; }
-  .wordmark { font-size: min(calc((100vw - 2 * var(--gutter)) / 4.12), 17.4rem); font-weight: 300; line-height: 0.82; letter-spacing: -0.06em; margin-left: -0.05em; color: var(--ink); white-space: nowrap; }
-  .tagline { margin-top: 18px; font-size: var(--fs-md); color: var(--ink-2); }
-  .foot-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 40px; padding-bottom: 32px; font-size: var(--fs-xs); color: var(--muted); }
+  .tagline { margin-top: 16px; max-width: 34ch; font-size: var(--fs-md); color: var(--ink); }
+  .foot-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 24px; padding-bottom: 32px; font-size: var(--fs-xs); color: var(--muted); }
   .foot-base a { color: inherit; }
   @media (max-width: 760px) { .foot { grid-template-columns: 1fr; } .foot-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
