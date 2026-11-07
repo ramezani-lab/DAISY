@@ -118,4 +118,14 @@ const nextTypes = Object.keys(NEXT).filter((k) => alumni.some((a) => a.data.next
   .alumni td.thesis a { font-weight: 400; color: var(--link); }
   .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   .alumni .sample-note { margin-left: 6px; }
+  /* On a phone each alumnus becomes a short stack, so nothing is cut off at the screen edge. */
+  @media (max-width: 640px) {
+    .alumni, .alumni tbody, .alumni tr, .alumni td { display: block; min-width: 0; }
+    .alumni thead { display: none; }
+    .alumni tr[hidden] { display: none; }
+    .alumni tr + tr { margin-top: 22px; }
+    .alumni td { padding: 1px 0; border: 0; }
+    .alumni td:empty { display: none; }
+    .alumni td.thesis { max-width: none; }
+  }
 </style>

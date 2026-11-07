@@ -43,8 +43,8 @@ const ld = {
     <a class="crumb" href="/publications/">Publications</a>
     <h1 class="title">{d.title}</h1>
     <p class="authors"><Authors authors={d.authors} /></p>
-    <p class="venue"><em>{d.venue}</em>{d.date ? `, ${fmtDate(d.date)}` : `, ${d.year}`}
-      {d.type === 'preprint' && <span class="meta"> {PUB_TYPES[d.type]}</span>}
+    <p class="venue"><span><em>{d.venue}</em>{d.date ? `, ${fmtDate(d.date)}` : `, ${d.year}`}</span>
+      {d.type === 'preprint' && !/preprint/i.test(d.venue) && <span class="meta"> {PUB_TYPES[d.type]}</span>}
       {d.award && <span class="badge"><Icon name="award" size={13} />{d.award}</span>}
       {d.sample && <span class="sample-note">Sample</span>}</p>
     <p class="links">{pubLinks(pub).map((l) => <a class="btn" href={l.href} rel="noopener">{l.label}</a>)}</p>
@@ -78,7 +78,7 @@ const ld = {
   });
 </script>
 <style>
-  .title { font-family: var(--serif); font-size: clamp(1.5rem, 1.05rem + 1.8vw, 2.6rem); font-weight: 500; letter-spacing: -0.015em; max-width: 34ch; line-height: 1.18; }
+  .title { font-family: var(--serif); font-size: clamp(1.4rem, 1.05rem + 1.1vw, 2.1rem); font-weight: 500; letter-spacing: -0.015em; max-width: 46ch; line-height: 1.2; }
   .authors { margin-top: 18px; font-size: var(--fs-md); }
   .venue { margin-top: 6px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
   .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }

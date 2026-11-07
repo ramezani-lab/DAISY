@@ -16,7 +16,7 @@ const cited = citations(pub.id);
   <p class="pub-authors"><Authors authors={d.authors} /></p>
   <p class="pub-venue">
     <em>{d.venue_short && !d.venue.includes(d.venue_short) && !compact ? `${d.venue} (${d.venue_short})` : d.venue}</em>{showYear && <span>, {d.year}</span>}
-    {d.type === 'preprint' && <span class="kind">{PUB_TYPES[d.type]}</span>}
+    {d.type === 'preprint' && !/preprint/i.test(d.venue) && <span class="kind">{PUB_TYPES[d.type]}</span>}
     {d.award && <span class="badge"><Icon name="award" size={13} />{d.award}</span>}
     {cited && cited.count > 0 && <a class="cites" href={cited.openalex} rel="noopener" title="Citation count from OpenAlex">Cited by {cited.count}</a>}
   </p>

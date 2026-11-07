@@ -148,7 +148,8 @@ a.chip:hover { background: var(--ink); color: var(--paper); }
 .sample-note { display: inline-block; font-size: var(--fs-xs); color: var(--daisy-ink); background: var(--daisy-soft); padding: 1px 8px; vertical-align: middle; font-family: var(--sans); font-weight: 500; letter-spacing: 0; }
 
 /* ── Two-column detail layout ───────────────────────────── */
-.detail { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(32px, 6vw, 96px); padding: clamp(40px, 6vw, 72px) 0 104px; }
+/* padding-block only: .detail sits on .wrap, whose side padding keeps the text off the screen edge. */
+.detail { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(32px, 6vw, 96px); padding-block: clamp(40px, 6vw, 72px) 104px; }
 .detail aside { font-size: var(--fs-sm); }
 .detail aside h2 { font-size: var(--fs-sm); font-weight: 600; color: var(--muted); margin: 0 0 10px; letter-spacing: 0; }
 .detail aside section + section { margin-top: 36px; }
@@ -156,7 +157,7 @@ a.chip:hover { background: var(--ink); color: var(--paper); }
 .detail aside li + li { margin-top: 6px; }
 @media (max-width: 860px) { .detail { grid-template-columns: minmax(0, 1fr); } }
 
-.block + .block { margin-top: 64px; }
+.block + .block, .prose + .block { margin-top: 64px; }
 .block > h2 { font-size: var(--fs-lg); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 20px; }
 
 .empty { padding: 28px; background: var(--surface); color: var(--ink-2); max-width: 60ch; }
